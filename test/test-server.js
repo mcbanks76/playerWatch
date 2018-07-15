@@ -6,7 +6,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe("index page", function() {
+describe("html", function() {
   it("should exist", function() {
     return chai
       .request(app)
