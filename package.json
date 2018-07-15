@@ -1,7 +1,6 @@
 {
   "name": "player-watch",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "dependencies": {
     "express": "^4.16.3",
@@ -18,5 +17,17 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcbanks76/playerWatch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mcbanks76/playerWatch/issues"
+  },
+  "homepage": "https://github.com/mcbanks76/playerWatch#readme",
+  "description": ""
 }
