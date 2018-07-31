@@ -1,77 +1,46 @@
 'use strict'
-const SPORTRADAR_SEARCH_URL = "https://api.sportradar.us/mlb-"
 
-function getDataFromApi(searchTerm, callback) {
- const settings = {
-    url: SPORTRADAR_SEARCH_URL,
-    data: {
-      access_level: 't',
-      version: 6,
-      seasontd: 'seasontd',
-      season_year: 2018,
-      mlb_season: 'REG',
-      your_api_key: 'jm9frdbhpz26zspgamqj394d',
-      q: `${searchTerm}`,
-    },
-    dataType: 'json',
-    type: 'GET',
-    success: callback
-  };
+let MOCK_DATA = {
+  "playerStats": [
+  {
+    "id": "11111",
+    "playerName": "Mookie Betts",
+    "stat": "Batting Average",
+    "statrank": "1",
+    "statNumber": ".339",
+  },
 
-  $.ajax(settings);
-}
-
-function handleSearchRestart() {
- $('.js-menu').on('click', '.js-restart-search', function(event) {
-    $('.js-search-results, .js-selected-artist').empty();
-  });
-}
-
-function renderResult(result) {
-  return `
-  <h4>Player: ${hitting.batting_average.players}</h4></br>
-  <div class ="accordion">
-  </div>
-  `;
-}
-
-function renderSearchResult(result) {
-return `
-<div class="search-result">
-  <p> Your Selection:</br><span class="result-name">${result.Name}</span></p>
-
-  <p class="result-description">Based on your selection, here are your recommendations:</p>
-</div>`
-}
-
-function displayPlayerSearchData(data) {
-  const results = data.season.leagues.hitting.map((item, index) => renderResult(item));
-  if (results.length != 0) {
-    $('.js-search-results').html(results);
-  }
-
-  else {
-     $('.js-search-results').html("<p> Sorry! No Results Found. Please Search Again.</p>");
+  {
+    "id": "22222",
+    "playerName": "Mike Trout",
+    "stat": "Batting Average",
+    "statrank": "2",
+    "statNumber":".330",
   }  
+]
+
+};
+
+function getRecentPlayerUpdates(callbackFn) {
+    // we use a `setTimeout` to make this asynchronous
+    // as it would be with a real AJAX call.
+  setTimeout(function(){ callbackFn(MOCK_DATA)}, 1);
 }
 
-function watchSubmit() {
-  $('.js-search-form').submit(event => {
-    event.preventDefault();
-    const queryTarget = $(event.currentTarget).find('.js-query');
-    const query = queryTarget.val();
-    // clear out the input
-    queryTarget.val("");
-    getDataFromAPI(query, displayPLayerSearchData);
-  });
+function displayPlayerStats(data) {
+    for (let index in data.playerStats) {
+       $('.js-search-results').append(
+        '<p>' + data.playerStats[index].playerName + '</p>');
+    }
 }
 
-function createApp() {
-  watchSubmit();
-  handleSearchRestart();
+// this function can stay the same even when we
+// are connecting to real API
+function getAndDisplayStats() {
+    getRecentPlayerUpdates(displayPlayerStats);
 }
 
-$( function() {
-
-  createApp();
+$(function() {
+    getAndDisplayStats();
 });
+
